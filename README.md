@@ -4,6 +4,8 @@ python wrapper of the portail-api.meteofrance.fr datasets
 
 It especially allows to manage easily the API key.
 
+Access the documentation on https://antoinetavant.github.io/meteofranceapi/
+
 ## Disclaimer
 
 The tool is not officially provided by MétéoFrance.
