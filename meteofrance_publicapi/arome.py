@@ -9,7 +9,7 @@ class AromeForecast(MeteoFranceAPI):
     """Access the AROME numerical Forcast.
 
     Usage
-    ====
+    =====
 
     1. Fetch the capabilities
     -------------------------
