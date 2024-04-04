@@ -40,7 +40,7 @@ test = [
     "python-dotenv",
 ]
 all = [
-    "meteofranceapi[test,doc]"
+    "meteofrance_publicapi[test,doc]"
 ]
 
 [tool.setuptools]

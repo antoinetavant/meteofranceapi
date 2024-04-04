@@ -2,9 +2,11 @@
 
 python wrapper of the portail-api.meteofrance.fr datasets
 
+It especially allows to manage easily the API key.
+
 ## Disclaimer
 
-The tool is not officialy provided by MétéoFrance.
+The tool is not officially provided by MétéoFrance.
 
 It is build by trials-and-errors.
 
@@ -12,7 +14,7 @@ Most of the functionalities should work, but it may not be the best way to achie
 
 # Installation
 
-Using `pip``
+Using `pip`
 ```
 pip install meteofrance-publicapi
 ```
@@ -65,7 +67,9 @@ observation_client.list_stations()
 | 2101       | 98832101 | NaN       | GORO_ANCIENNE_PEPINIERE | -22.269167 | 166.967500 | 298            | 1995-01-01 | ETENDU |
 | 2102       | 98833002 | NaN       | MEA                     | -21.455500 | 165.767333 | 571            | 1988-01-01 | ETENDU |
 
+### Accessing Arome Forecasts
 
+See the notebook [Arome Forecast](./examples/arome.ipynb) for examples of accessing the forecast of the Arome model.
 
 # TODO
 
