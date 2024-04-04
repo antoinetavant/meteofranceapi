@@ -1,10 +1,30 @@
 
-import requests
 from pathlib import Path
-import rasterio
+import xmltodict
+import logging
 from .core import MeteoFranceAPI
 
-class AromeForcast(MeteoFranceAPI):
+logger = logging.getLogger(__name__)
+class AromeForecast(MeteoFranceAPI):
+    """Access the AROME numerical Forcast.
+
+    Usage
+    ====
+
+    1. Fetch the capabilities
+    -------------------------
+
+    Use the method ``get_capabilities`` to access the available data.
+
+    2. Get the coverage
+    -------------------
+
+    The coverage means the data fields available.
+    Such a field is the temperature.
+
+    use ``get_coverage`` to fetch the coverage.
+
+    """
 
     base_url = "https://public-api.meteofrance.fr/public/arome/1.0"
     entry_point_getcapabilities = "wcs/MF-NWP-HIGHRES-AROME-001-FRANCE-WCS/GetCapabilities"
@@ -16,13 +36,14 @@ class AromeForcast(MeteoFranceAPI):
                  application_id: str | None = None,
                  cache_dir: str | None = None):
         super().__init__(api_key, token, application_id)
-        self.cache_dir = Path(cache_dir) or Path("/tmp/cache")
+        cache_dir = cache_dir or "/tmp/cache"
+        self.cache_dir = Path(cache_dir)
 
     def get_capabilities(self):
         """Get the capabilities of the service.
-        In particlare, lists the available coverages IDs,
+        In particular, lists the available coverages IDs,
         that is a mandatory parameter for the get_coverage request."""
-        import xmltodict
+
         url = f"{self.base_url}/{self.entry_point_getcapabilities}"
         params = {
             "service": "WCS",
@@ -30,9 +51,6 @@ class AromeForcast(MeteoFranceAPI):
             "language": "eng",
         }
         response = self.session.get(url, params=params)
-        if response.status_code != 200:
-            print(response.text)
-            raise RuntimeError(f"Request failed with status code {response.status_code}")
         xml = response.text
         data_capabilities = xmltodict.parse(xml)
         list_capabilities = data_capabilities['wcs:Capabilities']['wcs:Contents']['wcs:CoverageSummary']
@@ -57,7 +75,7 @@ class AromeForcast(MeteoFranceAPI):
             the path to the file containing the raster
         """
         filename = self.cache_dir / self.latest_temperature_coverageid / "temperature_2m_0Z.tiff"
-        print(filename)
+        logger.debug(f"{filename=}")
         if not filename.exists():
             print("fetching data")
             url = f"{self.base_url}/{self.entry_point_getcoverage}"
@@ -73,48 +91,9 @@ class AromeForcast(MeteoFranceAPI):
                         ],
                 "geotiff:compression": "DEFLATE", # compression of the tiff file
             }
-
-
             response = self._get_request(url, params=params)
-
             #save res.text to tiff file
             filename.parent.mkdir(parents=True, exist_ok=True)
             with open(filename, "wb") as f:
                 f.write(response.content)
-        print("opening file")
-        with rasterio.open(filename) as src:
-            temperature = src.read(1, masked=True)
-            transform = src.transform
-        return temperature, transform, filename
-
-    @staticmethod
-    def plot_tiff_file(filename):
-        """Illustrates how to open a file an to plot it."""
-        import rasterio
-        import matplotlib.pyplot as plt
-        import cartopy.crs as ccrs
-        import cartopy.feature as feature
-
-        # Open the file:
-        with rasterio.open(filename) as src:
-            temperature = src.read(1, masked=True)
-            transform = src.transform
-
-
-        # Display the source image with cartopy using the geotransform from the source dataset
-        fig = plt.figure(figsize=(10, 10))
-        ax = fig.add_subplot(1, 1, 1, projection=ccrs.PlateCarree())
-
-        im = ax.imshow(temperature, cmap='jet', extent=[transform[2], transform[2] + transform[0]*temperature.shape[1], transform[5] + transform[4]*temperature.shape[0], transform[5]])
-
-        ax.add_feature(feature.BORDERS.with_scale('10m'), color='black', linewidth=1)
-        ax.add_feature(feature.COASTLINE.with_scale('10m'), color='black', linewidth=1)
-
-        cbar = plt.colorbar(im, ax=ax, shrink=0.5)
-
-        lyon_coord = [4.8357, 45.7640]
-        paris_coord = [2.3522, 48.8566]
-
-        ax.plot(lyon_coord[0], lyon_coord[1], 'bo', transform=ccrs.PlateCarree())
-        ax.plot(paris_coord[0], paris_coord[1], 'bo', transform=ccrs.PlateCarree())
-
+        return filename
