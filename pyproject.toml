@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools>=46.4.0"]
+requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "meteofranceapi"
-description = "python wrapper of the portail-api.meteofrance.fr datasets"
+name = "meteofrance-publicapi"
+description = "A wrapper of the portail-api.meteofrance.fr datasets"
 authors = [
   { name="Antoine Tavant"},
 ]
@@ -13,6 +13,7 @@ license = {file = 'LICENSE'}
 requires-python = ">=3.9"
 classifiers = [
     "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
 ]
 dependencies = [
     "pandas",
@@ -46,10 +47,10 @@ all = [
 zip-safe = false
 [tool.setuptools.packages.find]
 where = ["./"]
-include = ["meteofranceapi*"]
+include = ["meteofrance_publicapi*"]
 
 [tool.setuptools.dynamic]
-version = {attr = "meteofranceapi.__version__"}
+version = {attr = "meteofrance_publicapi.__version__"}
 
 
 [tool.ruff]
