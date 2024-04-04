@@ -21,6 +21,10 @@ dependencies = [
     "scipy",
     "deprecation",
     "requests",
+    "xmltodict",
+    "rasterio",
+    "cartopy",
+    "matplotlib",
 ]
 dynamic = ["version"]
 
