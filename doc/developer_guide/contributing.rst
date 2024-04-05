@@ -1,24 +1,24 @@
-.. _contributing_to_udwi_connector_landing_page:
+.. _contributing_landing_page:
 
 Developer Guide
 ===============
 
 This part of the documentation is a comprehensive resource for contributing to
-udwi_connector - for both new and experienced contributors.
+``meteofrance_publicapi`` - for both new and experienced contributors.
 
-We welcome your contributions to udwi_connector!
+We welcome your contributions to ``meteofrance_publicapi``!
 
 Intended audience
 =================
-This guide is intended primarily for developers who want to work on udwi_connector,
+This guide is intended primarily for developers who want to work on ``meteofrance_publicapi``,
 or its documentation.
 It provides information on how to install it, how to test it, and how to contribute.
 
 
-Testing udwi_connector
-======================
+Testing ``meteofrance_publicapi``
+=================================
 Testing is a mandatory step in the process of contributing to the project.
-As a mater of fact, it should be considered as the fest step after installing udwi_connector.
+As a mater of fact, it should be considered as the fest step after installing ``meteofrance_publicapi``.
 
 Please refer to the :ref:`testing` page for more information about the tests.
 
