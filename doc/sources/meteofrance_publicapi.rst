@@ -1,5 +1,7 @@
-meteofrance\_publicapi package
-==============================
+API reference
+=============
+
+This page gives an overview of all ``meteofrance_publicapi`` objects, functions and methods.
 
 .. automodule:: meteofrance_publicapi
    :members:
@@ -11,7 +13,7 @@ Submodules
 ----------
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 2
 
    meteofrance_publicapi.arome
    meteofrance_publicapi.const

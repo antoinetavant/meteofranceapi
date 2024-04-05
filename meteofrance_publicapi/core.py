@@ -4,7 +4,7 @@ import time
 import requests
 import logging
 from .const import EXPIRED_TOKEN_CODE, SUCCESS_CODE, PARAMETER_ERROR_CODE, MISSING_DATA_CODE
-from .errors import MissingParameterError
+from .errors import MissingParameterError, MissingDataError
 logger = logging.getLogger(__name__)
 
 class MeteoFranceAPI:
@@ -75,6 +75,7 @@ class MeteoFranceAPI:
             f.write(self.token)
         with open(cache_time_filename, "w") as f:
             f.write(str(time.time()))
+        return self.token
 
 
     def _get_request(self, url, params=None):
@@ -103,10 +104,13 @@ class MeteoFranceAPI:
             raise ValueError("token expired but could not get a new one")
         error_code = res.status_code
         if error_code == SUCCESS_CODE:
-            logging.debug("request successful")
+            logger.debug("request successful")
         if error_code == PARAMETER_ERROR_CODE:
-            logging.error("parameter error")
+            logger.error("parameter error")
             raise MissingParameterError(res.text)
+        if error_code == MISSING_DATA_CODE:
+            logger.error("missing data")
+            raise MissingDataError(res.text)
         return res
 
 
