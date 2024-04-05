@@ -80,7 +80,7 @@ observation_client.list_stations()
 
 ### Accessing Arome Forecasts
 
-See the notebook [Arome Forecast](./examples/arome.ipynb) for examples of accessing the forecast of the Arome model.
+See the notebook [Arome Forecast](./doc/examples/arome.ipynb) for examples of accessing the forecast of the AROME model.
 
 # TODO
 
