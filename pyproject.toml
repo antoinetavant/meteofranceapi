@@ -45,6 +45,7 @@ doc = [
     "sphinx",
     "pydata-sphinx-theme",
     "sphinx_design",
+    "nbsphinx",
 ]
 test = [
     "pytest",
