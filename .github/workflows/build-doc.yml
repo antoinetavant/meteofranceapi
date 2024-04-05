@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v3
-      - uses: pandoc/actions/setup-pandoc@main
+      - uses: pandoc/actions/setup@main
       - name: Install dependencies
         run: |
           pip install .[all]
