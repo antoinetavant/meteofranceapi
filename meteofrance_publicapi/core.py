@@ -48,7 +48,7 @@ class MeteoFranceAPI:
         """
         # cache the token for 1 hour
         TOKEN_DURATION_S = 3600
-        local_tmp_cache = Path("/tmp/correction_climatique/meteofrance/arome/")
+        local_tmp_cache = Path("/tmp/meteofrance/arome/")
         cache_filename = local_tmp_cache / "token.txt"
         cache_time_filename = local_tmp_cache / "token_time.txt"
 
@@ -111,6 +111,12 @@ class MeteoFranceAPI:
         if error_code == MISSING_DATA_CODE:
             logger.error("missing data")
             raise MissingDataError(res.text)
+        if error_code != SUCCESS_CODE:
+            # Quick and dirty error handling
+            # TODO: implement a proper error handling
+            # for each error code of the API
+            logger.error(f"error code: {error_code}")
+            raise ValueError(f"error code: {error_code}")
         return res
 
 

@@ -110,8 +110,8 @@ class AromeForecast(MeteoFranceAPI):
 
     def _validate_parameters(self):
         """Assert the parameters are valid."""
-        if self.precision not in [0.01, 0.02]:
-            raise ValueError("The parameter precision must be 0.01 or 0.02")
+        if self.precision not in [0.01, 0.025]:
+            raise ValueError("The parameter precision must be 0.01 or 0.025")
         if self.territory not in AVAILABLE_TERRITORY:
             raise ValueError(
                 f"The parameter precision must be in {AVAILABLE_TERRITORY}"
@@ -179,6 +179,8 @@ class AromeForecast(MeteoFranceAPI):
             for coverageid in self.all_coverageid
             if coverageid.startswith(coverage_name)
         ]
+        if not coverage_ids:
+            raise ValueError(f"No coverage ID found for {coverage_name}")
         return sorted(coverage_ids)
 
     def get_description(self, coverageid=None):
