@@ -84,7 +84,10 @@ Indices and tables
 
 .. toctree::
    :maxdepth: 1
-    :hidden:
+   :hidden:
 
    sources/meteofrance_publicapi
    examples/index
+   getting_started/index
+   user_guide/index
+   developer_guide/contributing

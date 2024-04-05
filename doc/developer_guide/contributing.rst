@@ -75,4 +75,5 @@ For complete instructions please see the setup guide.
     :caption: Developer guide
 
     contributing_to_docs
+    branches_and_CD
     testing

@@ -19,3 +19,4 @@ Submodules
    meteofrance_publicapi.errors
    meteofrance_publicapi.observations
    meteofrance_publicapi.raster
+   meteofrance_publicapi.tests
