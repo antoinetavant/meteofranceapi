@@ -1,18 +1,24 @@
-# meteofranceapi
+# MeteoFrance_PublicAPI: A Python Wrapper for the MétéoFrance API !
+
+![Supported Python versions](https://img.shields.io/pypi/pyversions/meteofrance-publicapi.svg?color=%2334D058) ![License](https://img.shields.io/pypi/l/meteofrance-publicapi
+) ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/antoinetavant/meteofranceapi/python-test.yml)
+
 
 python wrapper of the portail-api.meteofrance.fr datasets
 
 It especially allows to manage easily the API key.
 
-Access the documentation on https://antoinetavant.github.io/meteofranceapi/
+**Documentation**:  [antoinetavant.github.io/meteofranceapi](https://antoinetavant.github.io/meteofranceapi/) (WIP)
+
+**Source Code**: [github.com/antoinetavant/meteofranceapi](https://github.com/antoinetavant/meteofranceapi)
 
 ## Disclaimer
 
 The tool is not officially provided by MétéoFrance.
 
-It is build by trials-and-errors.
+It is build by trials-and-errors and revers-engineering by an amateur.
 
-Most of the functionalities should work, but it may not be the best way to achieve  it.
+Most of the functionalities should work, but it may not be the best way to achieve it.
 
 # Installation
 
@@ -22,20 +28,23 @@ pip install meteofrance-publicapi
 ```
 
 # Usage
+To use the ressources, you need an account at MeteoFrance. It is free (as in free-beer).
 
-## Register an account and get the API key
-You need an account on https://portail-api.meteofrance.fr/
+## How to get the API key
+First register on [portail-api.meteofrance.fr](https://portail-api.meteofrance.fr/)
 
 Once your account is activated, several options are possible to use `meteofrance-publicapi` :
 - an API key for the API requested
 - a token for the API requested (limited to max 1 hour)
 - an Application ID to the classes which will manage the API token.
 
-The Application ID is the recommended use.
+The Application ID is the recommended use, as it allows to requests dynamically new tokens.
+
+However, you need to keep it a secret !
 
 ### Obtaining the Application ID
 
-From the website https://portail-api.meteofrance.fr/
+From the website  [portail-api.meteofrance.fr](https://portail-api.meteofrance.fr/)
 - click on the _Bonjour User Name_ button (upper right corner)
 - click _Mes API_
 - click "Générer Token" for _any API_
