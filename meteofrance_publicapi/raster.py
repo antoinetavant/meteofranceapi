@@ -31,10 +31,11 @@ def plot_tiff_file(filename, data_type="temperature"):
     ax.add_feature(feature.BORDERS.with_scale('10m'), color='black', linewidth=1)
     ax.add_feature(feature.COASTLINE.with_scale('10m'), color='black', linewidth=1)
     cbar = plt.colorbar(im, ax=ax, shrink=0.5)
-    date = filename.stem.split("_")[-1]
+    height = filename.stem.split("_")[0]
+    computed_at = filename.parent.stem.split("_")[-1]
     if data_type == "temperature":
         cbar.set_label("Temperature (°C)")
-        ax.set_title(f"Temperature at 2m above ground \n at {date} ")
+        ax.set_title(f"Temperature at {height} above ground \n computed at {computed_at} ")
     add_city_location = False
     if add_city_location:
         lyon_coord = [4.8357, 45.7640]

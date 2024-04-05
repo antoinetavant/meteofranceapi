@@ -255,7 +255,11 @@ class AromeForecast(MeteoFranceAPI):
         .. see-also::
            :func:`.aster.plot_tiff_file` to plot the file.
         """
-        coverageid = coverageid or self.latest_temperature_coverageid
+        if coverageid is None:
+            coverageid_prefix_temperature = (
+                "TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND"
+            )
+            coverageid = self.all_coverageid_of_name(coverageid_prefix_temperature)[-1]
         filename = f"{height}m_{time}Z_{lat[0]}-{lat[1]}_{long[0]}-{long[1]}.tiff"
         filepath = self.cache_dir / coverageid / filename
         logger.debug(f"{filepath=}")
