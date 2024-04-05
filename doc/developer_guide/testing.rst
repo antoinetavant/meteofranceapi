@@ -63,6 +63,4 @@ Make sure to implement at least the unit tests of your contribution.
 See :doc:`meteofrance_publicapi.tests </sources/meteofrance_publicapi.tests>` to get a feeling on how the library
 tests are currently implemented.
 
-A few guidelines about how to write the tests are still located `on the wiki`_.
-
 .. _its documentation: https://docs.pytest.org/en/7.1.x/getting-started.html
