@@ -11,3 +11,4 @@ Bellow is a list of examples.
    :caption: Contents:
 
    arome
+   arpege
