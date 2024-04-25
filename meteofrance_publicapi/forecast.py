@@ -1,12 +1,13 @@
 from pathlib import Path
 import xmltodict
+from .errors import MissingDataError
 import logging
 from .core import MeteoFranceAPI
 
 logger = logging.getLogger(__name__)
 
 #: The available territories for the AROME model.
-AVAILABLE_TERRITORY = [
+AVAILABLE_AROME_TERRITORY = [
     "FRANCE",
     "NCALED",
     "INDIEN",
@@ -15,7 +16,14 @@ AVAILABLE_TERRITORY = [
     "ANTIL",
 ]
 
-precision_float_to_str = {0.01: "001", 0.025: "0025"}
+AVAILABLE_ARPEGE_TERRITORY = [ "EUROPE", "GLOBE", "ATOURX", "EURAT"]
+RELATION_TERRITORY_TO_PREC_ARPEGE = {"EUROPE": 0.1,
+                                     "GLOBE": 0.25,
+                                     "ATOURX": 0.1,
+                                     "EURAT": 0.05}
+
+precision_float_to_str = {0.25: "025", 0.1: "01", 0.05: "005", 0.01: "001", 0.025: "0025"}
+
 
 
 class AromeForecast(MeteoFranceAPI):
@@ -112,9 +120,9 @@ class AromeForecast(MeteoFranceAPI):
         """Assert the parameters are valid."""
         if self.precision not in [0.01, 0.025]:
             raise ValueError("The parameter precision must be 0.01 or 0.025")
-        if self.territory not in AVAILABLE_TERRITORY:
+        if self.territory not in AVAILABLE_AROME_TERRITORY:
             raise ValueError(
-                f"The parameter precision must be in {AVAILABLE_TERRITORY}"
+                f"The parameter precision must be in {AVAILABLE_AROME_TERRITORY}"
             )
 
     @property
@@ -147,9 +155,20 @@ class AromeForecast(MeteoFranceAPI):
                 "version": "2.0.1",
                 "language": "eng",
             }
-            response = self.session.get(url, params=params)
+            try :
+                response = self._get_request(url, params=params)
+            except MissingDataError as e:
+                logger.error(f"Error fetching the capabilities: {e}")
+                logging.error(f"URL: {url}")
+                logging.error(f"Params: {params}")
+                raise e
             xml = response.text
-            self.data_capabilities = xmltodict.parse(xml)
+            try:
+                self.data_capabilities = xmltodict.parse(xml)
+            except MissingDataError as e:
+                logger.error(f"Error parsing the XML response: {e}")
+                logger.error(f"Response: {xml}")
+                raise e
         return self.data_capabilities
 
     def get_capabilities(self):
@@ -287,3 +306,61 @@ class AromeForecast(MeteoFranceAPI):
             with open(filepath, "wb") as f:
                 f.write(response.content)
         return filepath
+
+
+class ArpegeForecast(AromeForecast):
+    api_version = "1.0"
+    base_url = "https://public-api.meteofrance.fr/public/arpege/" + api_version
+
+    def __init__(
+        self,
+        territory: str = "EUROPE",
+        api_key: str | None = None,
+        token: str | None = None,
+        application_id: str | None = None,
+        cache_dir: str | None = None,
+    ):
+        """Init the ArpegeForecast object.
+
+        Parameters
+        ----------
+        territory : str, optional
+            The ARPEGE territory to fetch, by default "FRANCE"
+        api_key : str | None, optional
+            The API Key, by default None
+        token : str | None, optional
+            The API Token, by default None
+        application_id : str | None, optional
+            The Application ID, by default None
+        cache_dir : str | None, optional
+            The path to the caching directory, by default None.
+            If None, the cache directory is set to "/tmp/cache".
+
+        Note
+        ----
+        See :class:`.MeteoFranceAPI` for the parameters `api_key`, `token` and `application_id`.
+
+        The available territories are listed in :data:`.AVAILABLE_TERRITORY`.
+
+        """
+        super(AromeForecast, self).__init__(api_key, token, application_id)
+        cache_dir = cache_dir or "/tmp/cache"
+        self.cache_dir = Path(cache_dir)
+        self.precision = RELATION_TERRITORY_TO_PREC_ARPEGE[territory]  # the precision of the ARPEGE model, in Degrees.
+        self.territory = territory  # the territory of the forecast.
+        self.data_capabilities = None
+        self.all_coverageid_prefix = None # the list of all coverage ID prefix
+        self.all_coverageid = None # the list of all coverage ID
+        self._validate_parameters()
+
+    def _validate_parameters(self):
+        """Assert the parameters are valid."""
+        if self.territory not in AVAILABLE_ARPEGE_TERRITORY:
+            raise ValueError(
+                f"The parameter precision must be in {AVAILABLE_ARPEGE_TERRITORY}"
+            )
+
+    @property
+    def entry_point(self):
+        """The entry point to the AROME service."""
+        return f"wcs/MF-NWP-GLOBAL-ARPEGE-{precision_float_to_str[self.precision]}-{self.territory}-WCS"

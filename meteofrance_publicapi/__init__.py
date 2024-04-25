@@ -1,3 +1,3 @@
 from .observations import Observations
-from .arome import AromeForecast
+from .forecast import AromeForecast, ArpegeForecast
 __version__ = "0.1.3"

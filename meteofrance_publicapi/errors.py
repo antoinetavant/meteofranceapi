@@ -12,13 +12,16 @@ class MissingParameterError(Exception):
 class MissingDataError(Exception):
     def __init__(self, text: str):
         #parse the error message with xmltodict
-        data = xmltodict.parse(text)
-        exception = data["mw:fault"]["mw:description"]["ns0:ExceptionReport"]["ns0:Exception"]
-        code = exception["@exceptionCode"]
-        locator = exception["@locator"]
-        text = exception["ns0:ExceptionText"]
-        message = (f"Error code: {code}\n"
-                   f"Locator: {locator}\n"
-                   f"Text: {text}")
+        try :
+            data = xmltodict.parse(text)
+            exception = data["mw:fault"]["mw:description"]["ns0:ExceptionReport"]["ns0:Exception"]
+            code = exception["@exceptionCode"]
+            locator = exception["@locator"]
+            text = exception["ns0:ExceptionText"]
+            message = (f"Error code: {code}\n"
+                    f"Locator: {locator}\n"
+                    f"Text: {text}")
+        except Exception as e:
+            message = text
         self.message = message
         super().__init__(self.message)
