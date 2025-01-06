@@ -1,0 +1,800 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Accessing Arome Data &#8212; meteofrance_publicapi v0.1.5 Manual</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'examples/arome';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Accessing Arpege Data" href="arpege.html" />
+    <link rel="prev" title="Example Gallery" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.1.5" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+<aside class="bd-header-announcement" aria-label="Announcement">
+  <div class="bd-header-announcement__content"><p>This is a Work In Progress project! Things can break without notice!</p></div>
+</aside>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">meteofrance_publicapi v0.1.5 Manual</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../sources/meteofrance_publicapi.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    Example Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../developer_guide/contributing.html">
+    Developer Guide
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/antoinetavant/meteofranceapi" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../sources/meteofrance_publicapi.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    Example Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../developer_guide/contributing.html">
+    Developer Guide
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/antoinetavant/meteofranceapi" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Accessing Arome Data</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="arpege.html">Accessing Arpege Data</a></li>
+
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Example Gallery</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Accessing Arome Data</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="Accessing-Arome-Data">
+<h1>Accessing Arome Data<a class="headerlink" href="#Accessing-Arome-Data" title="Link to this heading">#</a></h1>
+<p>using <code class="docutils literal notranslate"><span class="pre">meteofrance_publicapi</span></code></p>
+%pip install meteofrance_publicapi<section id="Get-your-application-ID">
+<h2>Get your application ID<a class="headerlink" href="#Get-your-application-ID" title="Link to this heading">#</a></h2>
+<p>See <a class="reference external" href="https://github.com/antoinetavant/meteofranceapi?tab=readme-ov-file#usage">the readme</a> for details.</p>
+<p>The following example uses a dotfile to store the secret.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import dotenv
+import os
+dotenv.load_dotenv()
+application_id = os.getenv(&quot;APPLICATION_ID&quot;)
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Optional-:-activate-the-logs-inside-the-notebook">
+<h2>Optional : activate the logs inside the notebook<a class="headerlink" href="#Optional-:-activate-the-logs-inside-the-notebook" title="Link to this heading">#</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import logging
+logging.basicConfig(level=logging.INFO)
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="Initialize-the-client">
+<h1>Initialize the client<a class="headerlink" href="#Initialize-the-client" title="Link to this heading">#</a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from meteofrance_publicapi import AromeForecast
+client = AromeForecast(application_id=application_id,
+                       cache_dir=&quot;./.cache&quot;)
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+</pre></div></div>
+</div>
+<section id="Fetch-the-capabilities">
+<h2>Fetch the capabilities<a class="headerlink" href="#Fetch-the-capabilities" title="Link to this heading">#</a></h2>
+<p>It is best the first get the capabilities from the API to know what is available.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>client.get_capabilities()
+client.all_coverageid_prefix
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;U_COMPONENT_OF_WIND__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND&#39;,
+ &#39;CONVECTIVE_AVAILABLE_POTENTIAL_ENERGY__GROUND_OR_WATER_SURFACE&#39;,
+ &#39;HIGH_CLOUD_COVER__GROUND_OR_WATER_SURFACE&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND&#39;,
+ &#39;TOTAL_PRECIPITATION_RATE__GROUND_OR_WATER_SURFACE&#39;,
+ &#39;U_COMPONENT_OF_WIND_GUST__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND&#39;,
+ &#39;TOTAL_WATER_PRECIPITATION__GROUND_OR_WATER_SURFACE&#39;,
+ &#39;PRESSURE__GROUND_OR_WATER_SURFACE&#39;,
+ &#39;LOW_CLOUD_COVER__GROUND_OR_WATER_SURFACE&#39;,
+ &#39;V_COMPONENT_OF_WIND__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND&#39;,
+ &#39;V_COMPONENT_OF_WIND_GUST__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND&#39;,
+ &#39;GEOMETRIC_HEIGHT__GROUND_OR_WATER_SURFACE&#39;,
+ &#39;RELATIVE_HUMIDITY__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND&#39;,
+ &#39;WIND_SPEED_GUST__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND&#39;,
+ &#39;BRIGHTNESS_TEMPERATURE__GROUND_OR_WATER_SURFACE&#39;,
+ &#39;MEDIUM_CLOUD_COVER__GROUND_OR_WATER_SURFACE&#39;,
+ &#39;TOTAL_SNOW_PRECIPITATION__GROUND_OR_WATER_SURFACE&#39;,
+ &#39;WIND_SPEED__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND&#39;,
+ &#39;TOTAL_PRECIPITATION__GROUND_OR_WATER_SURFACE&#39;]
+</pre></div></div>
+</div>
+<p>As you can see from the coverage ID prefixes, quite a lot are available ! Lets use the temperature for this example.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>coverage_name = &quot;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND&quot;
+coverageids = client.all_coverageid_of_name(coverage_name)
+coverageids
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-01T00.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-01T03.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-01T06.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-01T09.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-01T12.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-01T15.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-01T18.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-01T21.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-02T00.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-02T03.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-02T06.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-02T09.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-02T12.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-02T15.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-02T18.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-02T21.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-03T00.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-03T03.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-03T06.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-03T09.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-03T12.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-03T15.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-03T18.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-03T21.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-04T00.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-04T03.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-04T06.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-04T09.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-04T12.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-04T15.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-04T18.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-04T21.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-05T00.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-05T03.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-05T06.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-05T09.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-05T12.00.00Z&#39;,
+ &#39;TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-05T15.00.00Z&#39;]
+</pre></div></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">coverageids</span></code> corresponds to all the forecast computation available for this Temperature field. This example was run on 2024-05-04 at 18:00 UTC.</p>
+<p>The computations available goes back in the past up to 2024-04-01 up to the latests run available, today at 12:00 UTC. Let’s use the latests.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>coverageid = coverageids[-1]
+description = client.get_description(coverageid)
+</pre></div>
+</div>
+</div>
+<p>Here, description is a dict with a lot of information. For instance, you can get the limits of the domain with the following:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>description[&quot;wcs:CoverageDescriptions&quot;][&quot;wcs:CoverageDescription&quot;][&quot;gml:boundedBy&quot;]
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;gml:EnvelopeWithTimePeriod&#39;: {&#39;@srsName&#39;: &#39;http://meteofrance.fr/def/crs/3DLongLatHeight&#39;,
+  &#39;@axisLabels&#39;: &#39;long lat height time&#39;,
+  &#39;@uomLabels&#39;: &#39;deg deg m ISO8601&#39;,
+  &#39;@srsDimension&#39;: &#39;3&#39;,
+  &#39;gml:lowerCorner&#39;: &#39;-12.0 37.5 2&#39;,
+  &#39;gml:upperCorner&#39;: &#39;16.0 55.4 2&#39;,
+  &#39;gml:beginPosition&#39;: {&#39;@frame&#39;: &#39;#ISO-8601&#39;,
+   &#39;#text&#39;: &#39;2024-04-05T15:00:00Z&#39;},
+  &#39;gml:endPosition&#39;: {&#39;@frame&#39;: &#39;#ISO-8601&#39;, &#39;#text&#39;: &#39;2024-04-07T18:00:00Z&#39;}}}
+</pre></div></div>
+</div>
+<p>You can see that</p>
+<ul class="simple">
+<li><p>longitude spans from -12° et 16°</p></li>
+<li><p>latitude spans from 37.5° to 55.4°</p></li>
+<li><p>height spans from 2m to 2m (hum, so there is no height ?)</p></li>
+<li><p>time goes from 2024-04-05T15:00:00Z to 2024-04-07T10:00:00Z which means 3 days in the future !</p></li>
+</ul>
+<p>This 4D (but really 3D) domain can only be accessed by 2D slices.</p>
+<p>According to the few tests I did, I seems that only the 2D lat-long can be accessed, which mean one time at a time.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>temperature_filename = client.get_coverage(
+    coverageid=coverageid,
+    height=2,
+    time=3600,  # the value for the time is a bit strange. It is the number of seconds since the start of the forecast.
+    lat=(37.5, 55.4),
+    long=(-12, 16)
+)
+temperature_filename
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+WindowsPath(&#39;.cache/TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2024-04-05T15.00.00Z/2m_3600Z_37.5-55.4_-12-16.tiff&#39;)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from meteofrance_publicapi.raster import plot_tiff_file
+ax = plot_tiff_file(temperature_filename)
+ax.set_title(ax.get_title() + &quot;\n 1hour in the future&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Text(0.5, 1.0, &#39;Temperature at 2m above ground \n computed at 2024-04-05T15.00 \n 1hour in the future&#39;)
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+c:\Users\antoi\.conda\envs\dev\Lib\site-packages\cartopy\mpl\style.py:76: UserWarning: facecolor will have no effect as it has been defined as &#34;never&#34;.
+  warnings.warn(&#39;facecolor will have no effect as it has been &#39;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_arome_18_2.png" src="../_images/examples_arome_18_2.png" />
+</div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Example Gallery</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="arpege.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Accessing Arpege Data</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Accessing Arome Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Get-your-application-ID">Get your application ID</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Optional-:-activate-the-logs-inside-the-notebook">Optional : activate the logs inside the notebook</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Initialize-the-client">Initialize the client</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Fetch-the-capabilities">Fetch the capabilities</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/examples/arome.ipynb.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Antoine Tavant.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
