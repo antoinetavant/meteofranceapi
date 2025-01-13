@@ -3,6 +3,8 @@
 ![Supported Python versions](https://img.shields.io/pypi/pyversions/meteofrance-publicapi.svg?color=%2334D058) ![License](https://img.shields.io/pypi/l/meteofrance-publicapi
 ) ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/antoinetavant/meteofranceapi/python-test.yml)
 
+> [!NOTE]
+> This project is archived, see [Meteole](https://github.com/MAIF/meteole) for improved fonctionnalities.
 
 python wrapper of the portail-api.meteofrance.fr datasets
 
